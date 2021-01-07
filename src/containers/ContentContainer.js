@@ -8,15 +8,13 @@ const contentPropTypes = {
   className: PropTypes.string,
   todos: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
-      completed: PropTypes.bool.isRequired,
     }).isRequired,
   ).isRequired,
   editingTodo: PropTypes.shape({
-    value: PropTypes.string,
+    title: PropTypes.string,
     id: PropTypes.string,
-    completed: PropTypes.bool,
   }).isRequired,
 };
 

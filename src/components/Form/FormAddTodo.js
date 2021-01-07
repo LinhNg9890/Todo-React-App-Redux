@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import * as API from '../../reducers/api';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -11,10 +12,14 @@ const formAddTodopropTypes = {
 const FormAddTodo = ({ handleAddTodo }) => {
     const [todoValue, setTodoValue] = useState('');
 
-    const handleSubmitAndResetForm = e => {
+    const handleSubmitAndResetForm = async (e) => {
         e.preventDefault();
 
-        handleAddTodo(todoValue);
+        const respAdd = await API.createTodo({title: todoValue});
+        debugger
+        if (respAdd && respAdd.data) {
+            handleAddTodo(respAdd.data);
+        }
 
         // Reset value
         setTodoValue('');

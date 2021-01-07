@@ -8,9 +8,8 @@ import { CompletedTodo } from '../actions/CompletedTodo';
 
 const formTodoPropTypes = {
   todo: PropTypes.shape({
-    value: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
   }).isRequired,
   handleCompletedTodo: PropTypes.func.isRequired,
 };

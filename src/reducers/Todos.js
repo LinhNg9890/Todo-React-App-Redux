@@ -1,22 +1,25 @@
-import { v1 } from 'uuid';
-
+// import { GET_TODO_REQUEST, GET_TODO_SUCCESS, GET_TODO_FAILURE} from '../actions/GetTodo';
 import { ADD_TODO } from '../actions/AddTodo';
 import { CANCEL_EDIT_TODO } from '../actions/CancelEditTodo';
 import { DELETE_TODO } from '../actions/DeleteTodo';
 import { EDIT_TODO } from '../actions/EditTodo';
-import { COMPLETED_TODO } from '../actions/CompletedTodo';
+// import { COMPLETED_TODO } from '../actions/CompletedTodo';
 import { SELECT_EDIT_TODO } from '../actions/SelectEditTodo';
-
+import * as getTodo from '../actions/GetTodo'
 const TodosReducer = (state, action) => {
   switch (action.type) {
-    case ADD_TODO: {
-      const id = v1();
-      const todo = {
-        value: action.payload.value,
-        id,
-        completed: false,
-      };
+    case getTodo.GET_TODO_REQUEST:
+      return { ...state };
 
+    case getTodo.GET_TODO_SUCCESS:
+      const todos = action.payload.Items;
+    return { ...state, todos };
+    
+    case getTodo.GET_TODO_FAILURE:
+    return { ...state };
+
+    case ADD_TODO: {
+      const todo = action.payload;
       return { ...state, todos: [...state.todos, todo] };
     }
 
@@ -33,7 +36,7 @@ const TodosReducer = (state, action) => {
     case EDIT_TODO: {
       const todos = state.todos.map(todo => {
         if (todo.id === action.payload.modifiedTodo.id) {
-          todo.value = action.payload.modifiedTodo.value;
+          todo.title = action.payload.modifiedTodo.title;
         }
 
         return todo;
@@ -42,19 +45,19 @@ const TodosReducer = (state, action) => {
       return { ...state, todos, editingTodo: {} };
     }
 
-    case COMPLETED_TODO: {
-      const todos = state.todos.map(todo => {
-        if (todo.id === action.payload.modifiedTodo.id) {
-          const newTodo = { ...todo };
-          newTodo.completed = !newTodo.completed;
-          return newTodo;
-        }
+    // case COMPLETED_TODO: {
+    //   const todos = state.todos.map(todo => {
+    //     if (todo.id === action.payload.modifiedTodo.id) {
+    //       const newTodo = { ...todo };
+    //       newTodo.completed = !newTodo.completed;
+    //       return newTodo;
+    //     }
 
-        return todo;
-      });
+    //     return todo;
+    //   });
 
-      return { ...state, todos };
-    }
+    //   return { ...state, todos };
+    // }
 
     case SELECT_EDIT_TODO: {
       const todo = state.todos.find(({ id }) => id === action.payload.id);

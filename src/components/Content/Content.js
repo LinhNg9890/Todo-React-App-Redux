@@ -11,20 +11,19 @@ const contentPropTypes = {
     className: PropTypes.string,
     todos: PropTypes.arrayOf(
       PropTypes.shape({
-        value: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
         id: PropTypes.string.isRequired,
-        completed: PropTypes.bool.isRequired,
       }).isRequired,
     ).isRequired,
     editingTodo: PropTypes.shape({
-      value: PropTypes.string,
+      title: PropTypes.string,
       id: PropTypes.string,
-      completed: PropTypes.bool,
     }).isRequired,
   };
-  
+
   const Content = props => {
-      console.log(props.todos)
+
+    console.log(props.todos)
     return (
       <div className={props.className}>
         <div className="container">
@@ -32,8 +31,8 @@ const contentPropTypes = {
             <div className="col-12 col-md-12 col-lg-8 col-xl-8">
               <div className="card text-center">
                 <div className="card-body">
-                  <h5 className="card-title">Welcome!</h5>
-                  <p className="card-text">To get started, add some todos to your list:</p>
+                  <h5 className="card-title">Todo App with Redux and Serverless</h5>
+                  
                   <div className="d-inline-block">
                     <FormAddTodoContainer />
                   </div>
@@ -50,9 +49,9 @@ const contentPropTypes = {
                     <div
                         className="content__todos__li">
                         {props.editingTodo.id === todo.id ? (
-                            <FormEditTodoContainer todo={todo} />
+                            <FormEditTodoContainer todo={todo} key={index}/>
                         ) : (
-                            <FormTodoContainer todo={todo} />
+                            <FormTodoContainer todo={todo} key={index}/>
                         )}
                     </div>
                     ))}

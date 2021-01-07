@@ -2,8 +2,7 @@ import reduceReducers from 'reduce-reducers';
 
 import InitialState from './InitialState';
 import TodosReducer from './Todos';
-import LocalStorageReducer from './LocalStorage';
 
-const AppReducer = reduceReducers(InitialState, LocalStorageReducer, TodosReducer);
+const AppReducer = reduceReducers(InitialState, TodosReducer);
 
 export default AppReducer;

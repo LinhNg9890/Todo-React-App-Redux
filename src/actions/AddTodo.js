@@ -1,6 +1,6 @@
-export const ADD_TODO = 'Add Todo';
+export const ADD_TODO = 'ADD_TODO';
 
-export const AddTodo = todoValue => ({
+export const AddTodo = payload => ({
     type: ADD_TODO,
-    payload: { value: todoValue }
+    payload: payload
 });

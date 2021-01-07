@@ -1,2 +1,1 @@
-// Localstorage name used by the application.
-export const LOCALSTORAGE_NAME = 'jata-state';
+export const HOST_API = 'https://f63pgrswbb.execute-api.us-east-1.amazonaws.com/dev';

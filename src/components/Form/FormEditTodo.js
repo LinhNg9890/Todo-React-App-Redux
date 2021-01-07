@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import * as API from '../../reducers/api';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -8,16 +9,15 @@ import './formEditTodo.css';
 
 const formEditTodoPropTypes = {
   todo: PropTypes.shape({
-    value: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
   }).isRequired,
   handleEditTodo: PropTypes.func.isRequired,
   handleCancelEditTodo: PropTypes.func.isRequired,
 };
 
 const FormEditTodo = props => {
-  const [todoValue, setTodoValue] = useState(props.todo.value);
+  const [todoTitle, setTodotitle] = useState(props.todo.title);
 
   useEffect(() => {
     window.addEventListener('keyup', handleKeyUp);
@@ -27,25 +27,28 @@ const FormEditTodo = props => {
     };
   });
 
-  const handleKeyUp = ev => {
+  const handleKeyUp = e => {
     // Handle ESC Key interaction
-    if (ev.code === 'Escape') {
-      props.handleCancelEditTodo(ev);
+    if (e.code === 'Escape') {
+      props.handleCancelEditTodo(e);
     }
   };
 
-  const handleTodoChange = ev => setTodoValue(ev.target.value);
+  const handleTodoChange = e => setTodotitle(e.target.value);
 
-  const handleEditTodoAndResetForm = ev => {
-    ev.preventDefault();
+  const handleEditTodoAndResetForm = async (e) => {
+    e.preventDefault();
 
-    props.handleEditTodo({
-      ...props.item,
-      value: todoValue,
-    });
+    const respAdd = await API.updateTodo({title: todoTitle, id: props.todo.id});
 
-    // Reset value
-    setTodoValue('');
+    if (respAdd && respAdd.data) {
+      props.handleEditTodo({
+        ...props.todo,
+        title: todoTitle,
+      });
+      // Reset title
+      setTodotitle('');
+    }
   };
 
   return (
@@ -58,7 +61,7 @@ const FormEditTodo = props => {
               className="form-control"
               id="input-edit-todo-item"
               name="edit-todo-item"
-              value={todoValue}
+              title={todoTitle}
               onChange={handleTodoChange}
               autoFocus
             />
@@ -70,7 +73,7 @@ const FormEditTodo = props => {
               type="submit"
               id="submit-edit-todo-item"
               className="btn btn-primary form_edit__button--first"
-              disabled={!todoValue}>
+              disabled={!todoTitle}>
               <FontAwesomeIcon icon={faCheck} />
               Save
             </button>

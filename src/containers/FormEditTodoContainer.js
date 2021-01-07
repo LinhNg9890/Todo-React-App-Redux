@@ -9,9 +9,8 @@ import { EditTodo } from '../actions/EditTodo';
 
 const formEditTodoPropTypes = {
   todo: PropTypes.shape({
-    value: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
   }).isRequired,
   handleEditTodo: PropTypes.func.isRequired,
   handleCancelEditTodo: PropTypes.func.isRequired,
